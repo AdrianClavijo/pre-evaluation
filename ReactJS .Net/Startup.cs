@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Contacts.Repository;
 using Contacts.Exceptions;
+using Contacts.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contacts
 {
@@ -20,6 +22,14 @@ namespace Contacts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options =>
+            {
+                options.SuppressAsyncSuffixInActionNames = false;
+            });
+            services.AddDbContext<DB_DevTestContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddCors();
             
             services.Add(new ServiceDescriptor(typeof(IUserRepository), new UserRepository()));
@@ -33,6 +43,12 @@ namespace Contacts
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(options =>{
+                options.WithOrigins("https://localhost:3000");
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
+
             app.UseSwagger();
             //specifying the Swagger JSON endpoint
             app.UseSwaggerUI(c =>
