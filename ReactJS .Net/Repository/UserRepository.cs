@@ -7,50 +7,44 @@ namespace Contacts.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private HashSet<User> allUsers;
+        private HashSet<Users> allUsers;
 
         public UserRepository() 
         {
-            allUsers = new HashSet<User>();
+            allUsers = new HashSet<Users>();
         }
 
         public bool ExistsById(long id)
         {
-            return allUsers.Any(x => x.Id == id);
+            return allUsers.Any(x => x.IdUser == id);
         }
 
-        User IUserRepository.FindByCode(string code)
+        Users IUserRepository.FindByCode(string code)
         {
-            return allUsers.FirstOrDefault(x => x.TemporalCode.ToString().Substring(0, 6).Equals(code));
+            return allUsers.FirstOrDefault(x => x.TempCode.ToString().Substring(0, 6).Equals(code));
         }
 
-        public IEnumerable<User> FindAll()
+        public IEnumerable<Users> FindAll()
         {
             return allUsers;
         }
 
-        public User FindById(long id)
+        public Users FindById(long id)
         {
-            return allUsers.FirstOrDefault(x => x.Id == id);
+            return allUsers.FirstOrDefault(x => x.IdUser == id);
         }
 
-        public User FindByUsernameAndPassword(string username, string password)
+        public Users Save(Users entity)
         {
-            // TODO: Implement missing logic here
-            return null;
-        }
-
-        public User Save(User entity)
-        {
-            var existentUser = FindById(entity.Id);
+            var existentUser = FindById(entity.IdUser);
             if (existentUser != null) 
             {
-                allUsers.RemoveWhere(x => x.Id == entity.Id);                
+                allUsers.RemoveWhere(x => x.IdUser == entity.IdUser);                
             }
             else 
             {
-                entity.Id = allUsers.Count + 1;
-                entity.TemporalCode = Guid.NewGuid();
+                entity.IdUser = allUsers.Count + 1;
+                entity.TempCode = Guid.NewGuid();
             }
 
             allUsers.Add(entity);

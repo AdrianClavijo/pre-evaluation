@@ -17,31 +17,31 @@ namespace Contacts.Repository
             return false;
         }
 
-        public IEnumerable<Contact> FindAll()
+        public IEnumerable<Models.Contact> FindAll()
         {
             // TODO: Implement missing logic here
-            return new List<Contact>();
+            return new List<Models.Contact>();
         }
 
-        public Contact FindByEmail(string email) 
-        {
-            // TODO: Implement missing logic here
-            return null;
-        }
-
-        public Contact FindById(long id)
+        public Models.Contact FindByEmail(string email) 
         {
             // TODO: Implement missing logic here
             return null;
         }
 
-        public Contact Save(Contact entity)
+        public Models.Contact FindById(long id)
         {
             // TODO: Implement missing logic here
             return null;
         }
 
-        public IEnumerable<Contact> FindByName(string name) 
+        public Models.Contact Save(Models.Contact entity)
+        {
+            // TODO: Implement missing logic here
+            return null;
+        }
+
+        public IEnumerable<Models.Contact> FindByName(string name) 
         {
             // TODO: Implement missing logic here
             return null;

@@ -1,9 +1,14 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+#nullable disable
+
 namespace Contacts.Models
 {
-    public class Contact
+    [Table("Contacts")]
+    public partial class Contact
     {
-        public long Id { get; set; }
-        public long UserId { get; set; }
+        public int IdContact { get; set; }
+        public int IdUser { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
     }

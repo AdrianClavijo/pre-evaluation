@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Contacts.Repository
 { 
-    public interface IContactRepository : BasicRepository<Contact, long> 
-    { 
-        Contact FindByEmail(string email);
+    public interface IContactRepository : BasicRepository<Models.Contact, long> 
+    {
+        Models.Contact FindByEmail(string email);
 
-        IEnumerable<Contact> FindByName(string name);
+        IEnumerable<Models.Contact> FindByName(string name);
     }
 }
