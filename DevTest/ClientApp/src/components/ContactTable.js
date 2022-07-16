@@ -17,7 +17,7 @@ const ContactTable = ({ data }) => {
                         </tr>
                     ) : (
                             data.map((item) => (
-                                <tr key={item.idUser}>
+                                <tr key={item.IdUser}>
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
                                     <td>

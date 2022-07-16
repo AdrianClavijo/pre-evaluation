@@ -1,46 +1,43 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AppRoutes from './AppRoutes';
-import { Layout } from './components/Layout';
-import './custom.css';
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import ContactTable from './components/ContactTable';
-/*
-export default class App extends Component {
-  static displayName = App.name;
-
-  render() {
-    return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
-    );
-  }
-}
-*/
+import ContactModal from './components/modals/ContactModal';
 
 const App = () => {
 
     const [contacts, setcontacts] = useState([]);
+    const [ShowModal, SetModal] = useState(false);
+
 
     const ShowContacts = async () => {
-        const res = await fetch("/IdUser/2");
+        const res = await fetch("/IdUser/IdContact/2");
         if (res.ok) {
             const data = await res.json();
             setcontacts(data)
         } else {
-            console.log("no data :(");
         }
     }
 
     useEffect(() => {
         ShowContacts()
     },[])
+
+
+    const SaveContact = async (Contact) => {
+
+        const res = await fetch("/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(Contact)
+        })
+
+        if (res.ok) {
+            ShowModal(!SetModal);
+            ShowContacts()
+        }
+    }
 
     return (
         <Container> 
@@ -51,13 +48,20 @@ const App = () => {
                             <h5> List of Contacts</h5>
                         </CardHeader>
                         <CardBody>
-                            <Button size="sm" color="success"> New Contact</Button>
+                            <Button size="sm" color="success"
+                                onClick={() => ShowModal(!this.SetModal)}
+                            > New Contact</Button>
                             <hr></hr>
                             <ContactTable data={contacts} />
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
+            <ContactModal
+                setModal={SetModal}  
+                showModal={ShowModal}  
+                saveContact={SaveContact}
+            />
         </Container>
         )
 }

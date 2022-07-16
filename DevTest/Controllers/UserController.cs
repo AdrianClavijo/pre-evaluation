@@ -21,7 +21,7 @@ namespace DevTest.Controllers
             return await _dbcontext.Users.ToListAsync();
         }
 
-        [HttpGet("/{IdUser}")]
+        [HttpGet("/IdUser/{IdUser}")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int IdUser)
         {
             var users = await _dbcontext.Users.FindAsync(IdUser);
@@ -55,7 +55,7 @@ namespace DevTest.Controllers
             return Created("", user);
         }
 
-        [HttpPut("/{IdUser}")]
+        [HttpPut("/IdUser/{IdUser}")]
         public async Task<IActionResult> UpdateUser(int IdUser, User user)
         {
             if (IdUser != user.IdUser)
@@ -81,7 +81,7 @@ namespace DevTest.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("/{IdUser}")]
+        [HttpDelete("/IdUser/{IdUser}")]
         public async Task<ActionResult<User>> DeleteUser(int IdUser)
         {
             var users = await _dbcontext.Users.FindAsync(IdUser);

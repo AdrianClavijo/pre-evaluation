@@ -17,7 +17,7 @@ namespace DevTest.Controllers
             //_contactservice = contactservice;
         }
 
-        [HttpGet("/IdUser/{IdUser}")]
+        [HttpGet("/IdUser/IdContact/{IdUser}")]
         public ActionResult<List<User>> GetAllContacts(int IdUser)
         {
             List<Contact> Contact = _dbcontext.Contacts.Where(Contact => Contact.IdUser.Equals(IdUser)).ToList();
@@ -28,7 +28,7 @@ namespace DevTest.Controllers
             return Ok(Contact);
         }
 
-        [HttpGet("/{IdContact}")]
+        [HttpGet("/IdContact/{IdContact}")]
         public async Task<ActionResult<IEnumerable<Contact>>> GetContact(int IdContact)
         {
             var Contact = await _dbcontext.Contacts.FindAsync(IdContact);
@@ -39,7 +39,7 @@ namespace DevTest.Controllers
             return Ok(Contact);
         }
 
-        [HttpGet("/{Email}/Email")]
+        [HttpGet("/Email/{Email}")]
         public ActionResult<List<User>> GetByEmail(string Email)
         {
             Email = Email.Replace("%40","@");
@@ -52,7 +52,7 @@ namespace DevTest.Controllers
             return Ok(Contact);
         }
 
-        [HttpPost]
+        [HttpPost("/Save")]
         public async Task<ActionResult<Contact>> SaveContact(Contact contact)
         {
             if (ContactExist(contact.Email))
@@ -64,7 +64,7 @@ namespace DevTest.Controllers
             return Created("", contact);
         }
 
-        [HttpPut("/{IdContact}")]
+        [HttpPut("/IdContact/{IdContact}")]
         public async Task<IActionResult> UpdateContact(int IdContact, Contact contact)
         {
             if (IdContact != contact.IdContact)
@@ -90,7 +90,7 @@ namespace DevTest.Controllers
             return Ok(contact);
         }
 
-        [HttpDelete("/{IdContact}")]
+        [HttpDelete("/IdContact/{IdContact}")]
         public async Task<ActionResult<Contact>> DeleteContact(int IdContact)
         {
             var Contact = await _dbcontext.Contacts.FindAsync(IdContact);
