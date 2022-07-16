@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Contacts.Repository;
-using Contacts.Exceptions;
 using Contacts.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,11 +29,8 @@ namespace Contacts
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors();
-            
-            services.Add(new ServiceDescriptor(typeof(IUserRepository), new UserRepository()));
-            services.Add(new ServiceDescriptor(typeof(IContactRepository), new ContactRepository()));
 
-            services.AddControllers(options => options.Filters.Add(new ApiExceptionFilter()));
+            services.AddControllers();
 
             services.AddSwaggerGen();
         }

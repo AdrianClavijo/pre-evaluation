@@ -33,7 +33,7 @@ namespace Contacts.Models
             {
                 entity.HasKey(e => e.IdContact);
 
-                entity.Property(e => e.IdContact).ValueGeneratedNever();
+                entity.Property(e => e.IdUser);
 
                 entity.Property(e => e.Email)
                     .IsRequired()

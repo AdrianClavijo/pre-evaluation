@@ -77,15 +77,11 @@ namespace Contacts.Controllers
         public async Task<ActionResult<Contact>> DeleteContact(int IdContact)
         {
             var Contact = await _dbcontext.Contacts.FindAsync(IdContact);
-            if (Contact == null)
+            if (Contact == null || object.ReferenceEquals(null, Contact))
             {
                 return NotFound();
             }
             _dbcontext.Contacts.Remove(Contact);
-            try
-            {
-                await _dbcontext.SaveChangesAsync();
-            }
             await _dbcontext.SaveChangesAsync();
 
             return Ok();
