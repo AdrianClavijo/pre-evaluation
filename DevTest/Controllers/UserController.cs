@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DevTest.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly DB_DevTestContext _dbcontext;
@@ -15,13 +15,13 @@ namespace DevTest.Controllers
             _dbcontext = dbcontext;
         }
 
-        [HttpGet("/users")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
             return await _dbcontext.Users.ToListAsync();
         }
 
-        [HttpGet("/users/{IdUser}")]
+        [HttpGet("/{IdUser}")]
         public async Task<ActionResult<IEnumerable<User>>> GetUser(int IdUser)
         {
             var users = await _dbcontext.Users.FindAsync(IdUser);
@@ -32,7 +32,7 @@ namespace DevTest.Controllers
             return Ok(users);
         }
 
-        [HttpGet("/users/{Username}/Username")]
+        [HttpGet("/Username/{Username}")]
         public ActionResult<List<User>> GetUserId(string Username)
         {
             var users = _dbcontext.Users.Where(user => user.Username.Equals(Username)).ToList();
@@ -43,7 +43,7 @@ namespace DevTest.Controllers
             return Ok(users);
         }
 
-        [HttpPost("/users")]
+        [HttpPost]
         public async Task<ActionResult<User>> SaveUser([FromBody] User user)
         {
             if (UserExist(user.Username))
@@ -55,7 +55,7 @@ namespace DevTest.Controllers
             return Created("", user);
         }
 
-        [HttpPut("/users/{IdUser}")]
+        [HttpPut("/{IdUser}")]
         public async Task<IActionResult> UpdateUser(int IdUser, User user)
         {
             if (IdUser != user.IdUser)
@@ -81,7 +81,7 @@ namespace DevTest.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("/users/{IdUser}")]
+        [HttpDelete("/{IdUser}")]
         public async Task<ActionResult<User>> DeleteUser(int IdUser)
         {
             var users = await _dbcontext.Users.FindAsync(IdUser);
